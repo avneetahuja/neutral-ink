@@ -10,15 +10,41 @@ const Container = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   padding: 20px;
 `;
 
-const ButtonContainer = styled.div`
+const Navbar = styled.nav`
+  width: 100%;
+  background-color: #1e40af; /* Dark blue theme */
+  padding: 10px 20px;
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+`;
+
+const Logo = styled.div`
+  font-weight: bold;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+
+const LeftPanel = styled.div`
+  flex: 1;
+  padding: 20px;
+`;
+
+const RightPanel = styled.div`
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -29,14 +55,10 @@ const Button = styled.button`
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
+  margin-top: 20px;
 
   &:hover {
     background-color: #ea580c;
-  }
-
-  &.back-button {
-    margin-top: 20px;
-    background-color: #1e40af;
   }
 `;
 
@@ -59,32 +81,52 @@ function App() {
 
   const handleCheckForBias = () => {
     setShowBiasProgress(true);
-    setBiasPercentage(67); // Set static percentage to 67
+    setBiasPercentage(0); // Reset percentage to start animation from 0
+
+    // Animate filling to 67%
+    let percentage = 0;
+    const interval = setInterval(() => {
+      percentage += 5;
+      if (percentage >= 67) {
+        setBiasPercentage(67);
+        clearInterval(interval);
+      } else {
+        setBiasPercentage(percentage);
+      }
+    }, 50);
   };
 
   return (
     <Container>
-      <h1>Choose Input Method</h1>
-      {mode === null ? (
-        <ButtonContainer>
-          <Button onClick={() => handleModeChange("text")}>Text Input</Button>
-          <Button onClick={() => handleModeChange("file")}>File Upload</Button>
-        </ButtonContainer>
-      ) : mode === "text" ? (
-        <>
-          <TextInput content={content} setContent={setContent} onBack={handleBack} />
-          <Button onClick={handleCheckForBias}>Check for Bias</Button>
-        </>
-      ) : (
-        <>
-          <FileUpload content={content} setContent={setContent} onBack={handleBack} />
-          <Button onClick={handleCheckForBias}>Check for Bias</Button>
-        </>
-      )}
-
-      {showBiasProgress && (
-        <BiasProgress heading="Bias Detection Progress" percentage={biasPercentage} />
-      )}
+      <Navbar>
+        <Logo>Neutral-Ink</Logo>
+      </Navbar>
+      <MainContent>
+        <LeftPanel>
+          <h1>Choose Input Method</h1>
+          {mode === null ? (
+            <>
+              <Button onClick={() => handleModeChange("text")}>Text Input</Button>
+              <Button onClick={() => handleModeChange("file")}>File Upload</Button>
+            </>
+          ) : mode === "text" ? (
+            <>
+              <TextInput content={content} setContent={setContent} onBack={handleBack} />
+              <Button onClick={handleCheckForBias}>Check for Bias</Button>
+            </>
+          ) : (
+            <>
+              <FileUpload content={content} setContent={setContent} onBack={handleBack} />
+              <Button onClick={handleCheckForBias}>Check for Bias</Button>
+            </>
+          )}
+        </LeftPanel>
+        <RightPanel>
+          {showBiasProgress && (
+            <BiasProgress heading="Bias Detection Progress" percentage={biasPercentage} />
+          )}
+        </RightPanel>
+      </MainContent>
     </Container>
   );
 }

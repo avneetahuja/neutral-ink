@@ -3,15 +3,15 @@ import styled from "styled-components";
 
 const ProgressContainer = styled.div`
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   background-color: #1e293b; /* Slate background */
   border: 2px solid white;
   border-radius: 5px;
-  margin-top: 20px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 `;
 
 const ProgressBar = styled.div`
