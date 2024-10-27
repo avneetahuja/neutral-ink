@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+# Backend
+/neutral-ink-backend/.venv
+/neutral-ink-backend/.env
+/neutral-ink-backend/__pycache__
