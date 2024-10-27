@@ -27,3 +27,4 @@ yarn-error.log*
 /neutral-ink-backend/.venv
 /neutral-ink-backend/.env
 /neutral-ink-backend/__pycache__
+/neutral-ink-backend/vars.py

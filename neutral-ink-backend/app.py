@@ -2,6 +2,8 @@
 import nltk
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from gpt import get_analysis
+
 
 from bias_detection import bias_detection
 from models import gender_classifier, political_classifier, racial_classifier
@@ -30,7 +32,8 @@ def detect_bias():
     # split text
     # check bias for each sentence
     # return sentence, biastype, biasscore in an array
-    result = bias_detection(text)
+    # result = bias_detection(text)
+    result = get_analysis(text)
     # political_result = political_classifier(text)
     # racial_result = racial_classifier(text)
     # gender_result = gender_classifier(text)
